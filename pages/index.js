@@ -42,7 +42,7 @@ function getData(cardType) {
   },
   {
   "img": "https://links.papareact.com/kji",
-  "location": "Newquay",
+  "location": "New quay",
   "distance": "6-hour drive"
   },
   {
@@ -93,7 +93,7 @@ export default function Home() {
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
               {exploreNearby?.map(item => (
               <SmallCard
-                key={item.img}
+                key={item.img + item.location}
                 img={item.img} 
                 distance={item.distance} 
                 location={item.location} 
@@ -105,7 +105,7 @@ export default function Home() {
             <h2 className='text-4xl font-semibold py-8'>Live Anywhere</h2>
                 <div className='flex space-x-3 overflow-scroll scrollbar-hide p-3 -ml-3'>
                   {liveAnywhere?.map(item => (
-                    <MediumCard key={item.img} img={item.img} title={item.title} />
+                    <MediumCard key={item.img + item.title} img={item.img} title={item.title} />
                   ))}
                 </div>
           </section>
