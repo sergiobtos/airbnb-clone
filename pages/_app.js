@@ -19,6 +19,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp
-
-
-//mapbox://styles/sergiobtos/clma7wr4y012j01ra2iqt8zkf
