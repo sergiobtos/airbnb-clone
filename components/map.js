@@ -1,5 +1,4 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
-import mapboxgl from 'mapbox-gl';
 import React, { useState, useMemo } from 'react'
 import Map, {Marker, Popup, FullscreenControl} from 'react-map-gl'
 import getCenter from 'geolib/es/getCenter';
@@ -40,7 +39,7 @@ function MapboxMap({searchResults}) {
     return(
     <Map
         mapStyle="mapbox://styles/sergiobtos/clma7wr4y012j01ra2iqt8zkf"
-        mapboxAccessToken={process.env.mapBoxAccessToken}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAP_KEY}
         initialViewState={{...viewport}}
         width="100%"
         height="100%"
