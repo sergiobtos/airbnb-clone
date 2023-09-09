@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { format } from "date-fns";
 import InfoCard from "../components/InfoCard";
-import Map from "../components/map";
+import MapboxMap from "../components/map";
 
 
 function Search({searchResults}) {
@@ -38,8 +38,8 @@ function Search({searchResults}) {
                 </div>
             </section>
 
-            <section className='hidden xl:inline-flex xl:min-w-[600px]' >
-                <Map searchResults={searchResults}/>
+            <section className='hidden xl:inline-flex xl:min-w-[1600px]' >
+                <MapboxMap searchResults={searchResults}/>
             </section>
         </main>
         <Footer />

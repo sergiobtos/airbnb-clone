@@ -1,9 +1,10 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
-import React, { useState, useEffect, useMemo } from 'react'
-import ReactMapGL, {Marker, Popup} from 'react-map-gl'
+import mapboxgl from 'mapbox-gl';
+import React, { useState, useMemo } from 'react'
+import Map, {Marker, Popup, FullscreenControl} from 'react-map-gl'
 import getCenter from 'geolib/es/getCenter';
 
-function Map({searchResults}) {
+function MapboxMap({searchResults}) {
     const [selectedLocation, setSelectedLocation] = useState();
 
     const center = useMemo(() => {
@@ -32,17 +33,12 @@ function Map({searchResults}) {
     }
 
     const handleOnSetLocation = (location) => {
+        console.log('Clicked location', location)
         setSelectedLocation(location)
     }
 
-    
-
-    useEffect(() => {
-        console.log('selectedLocation changed:', selectedLocation);
-      }, [selectedLocation]);
-
     return(
-    <ReactMapGL
+    <Map
         mapStyle="mapbox://styles/sergiobtos/clma7wr4y012j01ra2iqt8zkf"
         mapboxAccessToken={process.env.mapBoxAccessToken}
         initialViewState={{...viewport}}
@@ -50,17 +46,17 @@ function Map({searchResults}) {
         height="100%"
         onMove={handleOnMove}
     >
-        {searchResults.map((result) => (
-                <div key={result.long}>
+        {searchResults.map((location) => (
+                <div key={location.long}>
                     <Marker
-                        longitude={result.long}
-                        latitude={result.lat}
+                        longitude={location.long}
+                        latitude={location.lat}
                         offsetLeft={-20}
                         offsetTop={-10}
                         color="red"
                     >
                         <p
-                            onClick={() => handleOnSetLocation(result)}
+                            onClick={() => handleOnSetLocation(location)}
                             role='img'
                             className='cursor-pointer text-2xl animate-bounce'
                             aria-label="push-pin"
@@ -68,26 +64,31 @@ function Map({searchResults}) {
                             📌
                         </p>
                     </Marker>
-                    {/* Popup */}
-                    {selectedLocation?.long === result?.long ? (
-                    <Popup
-                        closeOnClick={true}
-                        latitude={result.lat}
-                        longitude={result.long}
-                        anchor="top-right"
-                        offset={5}
-                        onClose={() => setSelectedLocation({})}
-                        className="bg-white w-fit inline-flex flex-row user-select-none 
-                            text-gray-600 p-2 font-medium rounded-lg "
-                    >
-                    {result.title}
-                    </Popup>
-                    ) : (
-                        false
-                    )}
-                </div>
+                   {/* Popup renders onClick of the Marker */}
+          {selectedLocation?.long === location?.long ? (
+            <Popup
+              key={location.lat + location.long }
+              onOpen={() => console.log(`It was opened at ${location.lat}`)}
+              closeOnClick={true}
+              latitude={location.lat}
+              longitude={location.long}
+              offset={5}
+              onClose={() => setSelectedLocation({})}
+              className="bg-white w-fit inline-flex flex-row user-select-none 
+                  text-gray-600 p-2 font-medium rounded-lg "
+            >
+              {location.title}
+            </Popup>
+          ) : (
+            false
+          )}
+        </div>
             ))}
-    </ReactMapGL>)
+        <FullscreenControl
+        position="top-right"
+        className="absolute top-0 left-0"
+        />
+    </Map>)
 }
 
-export default Map;
+export default MapboxMap;
